@@ -1,0 +1,145 @@
+@field-size: 500px;
+
+@cell-size: (@field-size / 3) * 1px;
+@raw-height: (@field-size / 3) * 1px;
+
+@internal-gap: 20px;
+@raw-gap: @internal-gap 0;
+@cell-gap: 0 (@internal-gap / 3) * 1px;
+
+.field {
+  width: @field-size;
+
+  &__raw {
+    display: flex;
+    height: @raw-height;
+    margin: @raw-gap;
+
+    &-cell {
+      position: relative;
+      width: @cell-size;
+      height: @cell-size;
+      margin: @cell-gap;
+      border: 2px solid gray;
+      transition: 0.15s background, 0.15s box-shadow;
+      border-radius: 10px;
+      background: rgba(128, 197, 247, 1.0);
+      background: radial-gradient(at left top, rgba(128, 197, 247, 1.0), rgba(146, 121, 235, 1.0));
+
+      &:not(._ringed):not(._crossed):not(._disabled) {
+        &::before, &::after {
+          content: "";
+          position: absolute;
+          top: 50%;
+          left: 50%;
+          width: 52px;
+          height: 80px;
+          border-radius: 50px 50px 0 0;
+          background: blue;
+        }
+
+        &::before {
+          left: 50px;
+          transform: translate(50%, -50%) rotate(-45deg);
+          transform-origin: 0 100%;
+        }
+
+        &::after {
+          left: 0;
+          transform: translate(50%, -50%) rotate(45deg);
+          transform-origin: 100% 100%;
+        }
+      }
+
+      &:not(._disabled) {
+        &:hover {
+          cursor: pointer;
+          -webkit-box-shadow: 0 1px 4px 6px rgba(34, 60, 80, 0.2);
+          -moz-box-shadow: 0 1px 4px 6px rgba(34, 60, 80, 0.2);
+          box-shadow: 0 1px 4px 6px rgba(34, 60, 80, 0.2);
+        }
+      }
+
+      &._disabled:not(._ringed):not(._crossed) {
+        cursor: not-allowed;
+        background: rgba(108, 99, 179, 1.0);
+        background: radial-gradient(at left top, rgba(108, 99, 179, 1.0), rgba(143, 97, 199, 1.0));
+
+        &:after {
+          /*the content is the nose*/
+          content: "";
+          display: block;
+          position: absolute;
+          width: 2px;
+          height: 2px;
+          bottom: -6px;
+          left: 50%;
+          top: 53%;
+          border-radius: 1px;
+          background: #000;
+          box-shadow: /*eyes*/ -5px -4px 0 2px #000,
+            5px -4px 0 2px #000,
+            /*head*/
+            0 -5px 0 10px ivory,
+            /*teeth*/ -2px 6px 0 0 ivory,
+          2px 6px 0 0 ivory,
+          -6px 5px 0 0 ivory,
+          6px 5px 0 0 ivory,
+            /*border*/
+            0 -5px 0 13px #000;
+          transform: scale(2);
+        }
+      }
+
+      &._ringed {
+        background: rgb(34,193,195);
+        background: linear-gradient(80deg, rgba(34,193,195,1) 0%, rgba(255,187,41,1) 100%);
+        -webkit-box-shadow: 0 1px 4px 6px rgba(34, 60, 80, 0.2);
+        -moz-box-shadow: 0 1px 4px 6px rgba(34, 60, 80, 0.2);
+        box-shadow: 0 1px 4px 6px rgba(34, 60, 80, 0.2);
+
+        &:before {
+          opacity: 0;
+        }
+
+        &:after {
+          content: '';
+          position: absolute;
+          left: 50%;
+          top: 50%;
+          transform: translate3d(-50%, -50%, 0);
+          width: 50%;
+          height: 45%;
+          border-radius: 50%;
+          background: white;
+        }
+      }
+
+      &._crossed {
+        background: rgb(2,0,36);
+        background: linear-gradient(153deg, rgba(2,0,36,1) 0%, rgba(9,9,121,1) 29%, rgba(0,212,255,1) 100%);
+        -webkit-box-shadow: 0 1px 4px 6px rgba(34, 60, 80, 0.2);
+        -moz-box-shadow: 0 1px 4px 6px rgba(34, 60, 80, 0.2);
+        box-shadow: 0 1px 4px 6px rgba(34, 60, 80, 0.2);
+
+        &:before, &:after {
+          content: "";
+          position: absolute;
+          left: 50%;
+          top: 50%;
+          width: 50%;
+          height: 10px;
+          background: white;
+        }
+
+        &:before {
+          transform: translate3d(-50%, -50%, 0) rotate(45deg);
+        }
+
+        &:after {
+          transform: translate3d(-50%, -50%, 0) rotate(-45deg);
+        }
+      }
+    }
+  }
+}

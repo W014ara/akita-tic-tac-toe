@@ -1,0 +1,10 @@
+<div class="field">
+  <div *ngFor="let raws of this._field" class="field__raw">
+    <div *ngFor="let cell of raws" class="field__raw-cell" [ngClass]="{
+      _disabled: !cell.isEmpty || cell.allDisabled,
+      _crossed: cell.crossed,
+      _ringed: cell.ringed
+    }" (click)="_onCellClick(cell)">
+    </div>
+  </div>
+</div>
